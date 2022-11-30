@@ -1,13 +1,13 @@
 const letters="abcdefghijklmnopqrstuvwxyz";let lettersArray=Array.from("abcdefghijklmnopqrstuvwxyz"),lettersContainer=document.querySelector(".letters");lettersArray.forEach(e=>{let r=document.createElement("span"),a=document.createTextNode(e);r.appendChild(a),r.className="letter-box",lettersContainer.appendChild(r)});const words={programming:["php","javascript","go","scala","fortran","r","mysql","python",],movies:["Prestige","Inception","Parasite","Interstellar","Whiplash","Memento","Coco","Up",],people:["Mohamed","Abu Bakr","Omar","Othman","Ali"],countries:["Egypt","Saudi Arabia","Palestine","Qatar","Bahrain","Syria",]};let allKeys=Object.keys(words),randomPropNumber=Math.floor(Math.random()*allKeys.length),randomPropName=allKeys[randomPropNumber],randomPropValue=words[randomPropName],randomValueNumber=Math.floor(Math.random()*randomPropValue.length),randomValueValue=randomPropValue[randomValueNumber];document.querySelector(".game-info .category span").innerHTML=randomPropName;let lettersGuessContainer=document.querySelector(".letters-guess"),lettersAndSpace=Array.from(randomValueValue);lettersAndSpace.forEach(e=>{let r=document.createElement("span");" "===e&&(r.className="with-space"),lettersGuessContainer.appendChild(r)});let guessSpans=document.querySelectorAll(".letters-guess span"),wrongAttempts=0,successAnswer=0,theDraw=document.querySelector(".hangman-draw");function endGame(){let e=document.createElement("div"),r=document.createTextNode(`Game Over, The Word Is ${randomValueValue}`);e.innerHTML=`
   <lord-icon
     src="https://cdn.lordicon.com/hrqwmuhr.json"
-    trigger="hover"
+    trigger="loop"
     colors="primary:#30e8bd,secondary:#30e8bd"
     style="width:150px;height:150px">
 </lord-icon>`,e.appendChild(r),e.className="popup",document.body.appendChild(e)}function successGame(){let e=document.createElement("div"),r=document.createTextNode(`Congratulations, The Word Is ${randomValueValue}`);e.innerHTML=`
   <lord-icon
       src="https://cdn.lordicon.com/lupuorrc.json"
-      trigger="hover"
+      trigger="loop"
       colors="primary:#16c79e,secondary:#30e8bd"
       style="width:150px;height:150px">
   </lord-icon>`,e.appendChild(r),e.className="popup",document.body.appendChild(e)}document.addEventListener("click",e=>{let r=!1;if("letter-box"===e.target.className){e.target.classList.add("clicked");let a=e.target.innerHTML.toLowerCase();Array.from(randomValueValue.toLowerCase()).forEach((e,t)=>{a==e&&(r=!0,successAnswer++,guessSpans.forEach((e,r)=>{t===r&&(e.innerHTML=a)}))}),(successAnswer==randomValueValue.length||successAnswer==randomValueValue.length-1)&&successGame(),!0!==r?(wrongAttempts++,theDraw.classList.add(`wrong-${wrongAttempts}`),document.getElementById("fail").play(),8===wrongAttempts&&(endGame(),lettersContainer.classList.add("finished"))):document.getElementById("success").play()}});
